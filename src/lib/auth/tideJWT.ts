@@ -1,5 +1,7 @@
 import { jwtVerify, createLocalJWKSet } from "jose";
 import type { JWTPayload } from "jose";
+import { statSync } from "fs";
+import { join } from "path";
 import { loadTideConfig } from "./tidecloakConfig";
 
 // Lazy initialization — do NOT load config at module level.
@@ -8,9 +10,24 @@ import { loadTideConfig } from "./tidecloakConfig";
 // pre-bootstrap), eager loading throws at build time.
 let _jwks: ReturnType<typeof createLocalJWKSet> | null = null;
 let _config: ReturnType<typeof loadTideConfig> | null = null;
+let _configStamp = "";
+
+// Re-read the adapter when data/tidecloak.json changes (e.g. the realm was re-bootstrapped and now
+// signs with a new key); otherwise every token would fail verification until a server restart.
+function adapterStamp(): string {
+  if (process.env.CLIENT_ADAPTER) return "env";
+  try {
+    const st = statSync(join(process.cwd(), "data", "tidecloak.json"));
+    return `${st.mtimeMs}:${st.size}`;
+  } catch {
+    return "missing";
+  }
+}
 
 function getConfig() {
-  if (!_config) {
+  const stamp = adapterStamp();
+  if (!_config || stamp !== _configStamp) {
+    _configStamp = stamp;
     _config = loadTideConfig();
     if (!_config.jwk) {
       throw new Error(

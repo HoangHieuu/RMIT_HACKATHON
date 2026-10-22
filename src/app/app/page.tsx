@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, RotateCcw } from "lucide-react";
+import { ArrowRight, Check, RefreshCw, RotateCcw } from "lucide-react";
+import { useTideCloak } from "@tidecloak/nextjs";
 import { useApi } from "@/lib/client/api";
 import { useRoles } from "@/components/AppShell";
 import { Badge, Button, Card, Enforcer, Notice, PageHeader, SecurityState, StageBadge, cx } from "@/components/ui";
@@ -38,6 +39,23 @@ export default function Overview() {
   const [demo, setDemo] = useState<{ campaign: { title: string; status: Stage }; steps: Step[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [resetting, setResetting] = useState(false);
+  const { forceRefreshToken, login } = useTideCloak();
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Roles are read from the token. After a quorum grant commits, pull a fresh token so the new role
+  // (and the Tide credential the ORKs check) is picked up; fall back to a fresh sign-in.
+  async function refreshPermissions() {
+    setRefreshing(true);
+    try {
+      const ok = await forceRefreshToken();
+      if (!ok) return login();
+      window.location.reload();
+    } catch {
+      login();
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   const load = useCallback(() => {
     api<Me>("/api/me").then(setMe).catch((e) => setError(e.message));
@@ -67,6 +85,11 @@ export default function Overview() {
       <PageHeader
         title={me ? `Signed in as ${me.username}` : "Signed in"}
         description="Your permissions come from your verified TideCloak token, checked by VEIL's server on every request."
+        action={
+          <Button variant="secondary" busy={refreshing} onClick={refreshPermissions} title="Pick up roles granted since you signed in">
+            <RefreshCw className="size-3.5" strokeWidth={1.5} /> Refresh permissions
+          </Button>
+        }
       />
       {error && (
         <Notice kind="denied" title="VEIL's server could not verify your session" by="veil" className="mb-6">

@@ -123,7 +123,26 @@ if [ "${RESUME:-0}" = "1" ]; then
   docker start "$CONTAINER_NAME" > /dev/null
   for i in $(seq 1 48); do curl -sf "$TIDECLOAK_URL" > /dev/null 2>&1 && break; sleep 5; done
   curl -sf "$TIDECLOAK_URL" > /dev/null 2>&1 || { echo "ERROR: TideCloak did not come back. docker logs $CONTAINER_NAME"; exit 1; }
-  echo "    TideCloak is ready. Invite links: $INVITES_OUTPUT"
+  echo "    TideCloak is ready."
+  # Still FirstAdmin while personas are not linked: drain whatever is pending (e.g. role grants or
+  # boot-time claim backfills), then mint fresh invite links for every persona not yet linked.
+  approve_all_pending
+  echo "==> Regenerating invite links for personas not yet linked..."
+  : > "$INVITES_OUTPUT"
+  TOKEN="$(get_token)"
+  ALL=$(curl -s "$TIDECLOAK_URL/admin/realms/$REALM_NAME/users?max=100&briefRepresentation=false" -H "Authorization: Bearer $TOKEN")
+  for entry in "${CAST[@]}"; do
+    u="${entry%%:*}"
+    k=$(echo "$ALL" | jq -r --arg u "$u" '.[] | select(.username==$u) | .attributes.tideUserKey[0] // empty')
+    [ -n "$k" ] && { printf '%-10s %s
+' "$u" "(already linked)" | tee -a "$INVITES_OUTPUT"; continue; }
+    uid="$(user_id "$u")"
+    [ -z "$uid" ] && { echo "ERROR: persona $u does not exist in realm $REALM_NAME" >&2; exit 1; }
+    TOKEN="$(get_token)"
+    link=$(curl -s -X POST "$TIDECLOAK_URL/admin/realms/$REALM_NAME/tideAdminResources/get-required-action-link?userId=$uid&lifespan=43200"       -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '["link-tide-account-action"]')
+    printf '%-10s %s
+' "$u" "$link" | tee -a "$INVITES_OUTPUT"
+  done
 elif [ "${KEEP_CONTAINER:-0}" = "1" ] && curl -sf "$TIDECLOAK_URL" > /dev/null 2>&1; then
   # KEEP_CONTAINER=1: reuse the running TideCloak, drop only the realm (used to retry licensing).
   echo "==> KEEP_CONTAINER: deleting realm '$REALM_NAME' (if any) on the running TideCloak..."
