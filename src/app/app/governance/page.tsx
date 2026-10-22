@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTideCloak } from "@tidecloak/nextjs";
+import { useTideCloak } from "@/lib/tc";
 import { Models } from "@tideorg/js";
 import { ExternalLink, FilePlus2, Lock, PenLine, RefreshCw } from "lucide-react";
 import { useApi, useTideAdminApi, b64ToBytes, bytesToB64 } from "@/lib/client/api";
@@ -9,6 +9,8 @@ import { CAMPAIGN_POLICY, fetchAdminPolicy, signCampaignPolicy, type Purpose } f
 import { useRoles } from "@/components/AppShell";
 import { Badge, Button, Card, Enforcer, type EnforcerKind, ErrorText, Metrics, Notice, PageHeader, RawDetail, StageBadge, cx, td, th, tr } from "@/components/ui";
 import { ROLE, collectErrorText, type Stage } from "@/lib/veil";
+import { SIM } from "@/lib/sim/mode";
+import { simEnclave } from "@/lib/sim/client/enclave";
 
 interface Campaign {
   id: string;
@@ -143,6 +145,10 @@ export default function GovernancePage() {
     setBusy(`cr:${cr.id}`);
     setMsg(null);
     try {
+      if (SIM) {
+        const ok = await simEnclave({ title: "Approve this change request?", lines: [`${cr.actionType.replace(/_/g, " ").toLowerCase()}: ${describeCr(cr)}`, `Needs ${cr.threshold ?? threshold ?? 1} approvals; each admin counts once`], approveLabel: "Approve" });
+        if (!ok) throw new Error("You denied the request in the Tide enclave.");
+      }
       const first = await adminApi<{ mode?: string; requestModel?: string; committed?: boolean; authCount?: number; threshold?: number }>(`/iga/change-requests/${cr.id}/approve`, {
         method: "POST",
         body: {},

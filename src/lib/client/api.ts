@@ -1,6 +1,6 @@
 "use client";
 
-import { useTideCloak } from "@tidecloak/nextjs";
+import { useTideCloak } from "@/lib/tc";
 import { useCallback } from "react";
 
 export class ApiError extends Error {

@@ -1,6 +1,8 @@
 import path from "path";
 import type { NextConfig } from "next";
 
+const simulated = process.env.NEXT_PUBLIC_TIDE_MODE === "simulated";
+
 const nextConfig: NextConfig = {
   // The floating dev badge overlays page content in demo recordings and review captures.
   devIndicators: false,
@@ -13,7 +15,7 @@ const nextConfig: NextConfig = {
     // writes a log line or a row triggers a rebuild, and the page reloads in a loop.
     config.watchOptions = {
       ...config.watchOptions,
-      ignored: ["**/node_modules/**", "**/.next/**", "**/data/*.log", "**/data/veil.db*", "**/.impeccable/**", "**/.tide-pack/**"],
+      ignored: ["**/node_modules/**", "**/.next/**", "**/data/*.log", "**/data/veil.db*", "**/data/sim-keys.json", "**/.impeccable/**", "**/.tide-pack/**"],
     };
 
     // Fix 1: @tidecloak/js incomplete re-exports — suppress strict export checking
@@ -23,6 +25,7 @@ const nextConfig: NextConfig = {
     // Force webpack to resolve to ESM dist. Use path.resolve (not require.resolve).
     config.resolve.alias = {
       ...config.resolve.alias,
+      "@tide-config": path.resolve(__dirname, simulated ? "data/tidecloak.sim.json" : "data/tidecloak.json"),
       "@tidecloak/react": path.resolve(
         __dirname,
         "node_modules/@tidecloak/react/dist/esm/index.js"

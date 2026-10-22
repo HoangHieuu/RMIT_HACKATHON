@@ -1,5 +1,6 @@
 import { db, DEMO_CAMPAIGN_ID } from "@/lib/server/db";
 import { loadTideConfig } from "@/lib/auth/tidecloakConfig";
+import { SIM } from "@/lib/sim/mode";
 
 // Pre-flight for the demo: is every moving part up? Public on purpose, and it returns only
 // operational facts (no identities, ciphertext, tokens or user data).
@@ -17,7 +18,9 @@ export async function GET() {
     checks.adapter = { ok: false, detail: e instanceof Error ? e.message : "data/tidecloak.json unreadable" };
   }
 
-  if (base) {
+  if (SIM) {
+    checks.tidecloak = { ok: true, detail: "SIMULATED realm, served in-process (no Tide network)" };
+  } else if (base) {
     try {
       const r = await fetch(`${base}/realms/${realm}/.well-known/openid-configuration`, { cache: "no-store", signal: AbortSignal.timeout(4000) });
       checks.tidecloak = { ok: r.ok, detail: `${base} → HTTP ${r.status}` };

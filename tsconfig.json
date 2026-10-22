@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@tide-config": [
+        "./data/tidecloak.sim.json"
       ]
     }
   },

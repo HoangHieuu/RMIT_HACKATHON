@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { useTideCloak } from "@tidecloak/nextjs";
+import { useTideCloak } from "@/lib/tc";
 import {
   ArrowRight,
   ArrowUpRight,

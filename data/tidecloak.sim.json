@@ -1,0 +1,10 @@
+{
+  "realm": "veil",
+  "auth-server-url": "/api/sim/auth",
+  "ssl-required": "none",
+  "resource": "veil-client",
+  "public-client": true,
+  "confidential-port": 0,
+  "vendorId": "sim-vendor",
+  "homeOrkUrl": "https://sim.ork.invalid"
+}

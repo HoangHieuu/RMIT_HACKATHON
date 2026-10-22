@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthCallback } from "@tidecloak/nextjs";
+import { useAuthCallback } from "@/lib/tc";
 import { useEffect, useState } from "react";
 
 // Post-auth redirect handler (I-16).
