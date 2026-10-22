@@ -1,0 +1,22 @@
+node_modules/
+.next/
+out/
+build/
+
+# Secrets — operator credentials NEVER belong in the repo (AP-41).
+.env
+.env.local
+.env.*.local
+scripts/.skycloak-api-key
+
+# Local TideCloak state (adapter export + H2 volume)
+data/tidecloak.json
+data/keycloakdb*
+data/invite-links.txt
+data/veil.db*
+.tide-pack/
+data/init.log
+data/dev.log
+tsconfig.tsbuildinfo
+.impeccable/
+data/init-attempts.log
