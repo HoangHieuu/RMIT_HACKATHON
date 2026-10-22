@@ -27,4 +27,6 @@ Tide network overloaded? Run `npm run dev:sim` for a clearly labelled simulation
 
 Two-minute demo: [docs/veil-demo.mp4](docs/veil-demo.mp4).
 
+Same recording on Google Drive: https://drive.google.com/file/d/1CIMACZKG49q84HkKPJx5ZeuqDJiD_bvO/view?usp=sharing
+
 Everything below is setup and reference: see [docs/SETUP.md](docs/SETUP.md), [docs/TEST-CHECKLIST.md](docs/TEST-CHECKLIST.md) and [docs/DEMO-SCRIPT.md](docs/DEMO-SCRIPT.md).
