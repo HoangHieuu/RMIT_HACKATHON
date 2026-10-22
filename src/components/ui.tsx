@@ -28,12 +28,12 @@ export function cx(...c: (string | number | false | null | undefined)[]) {
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-accent text-white shadow-[0_1px_0_rgb(255_255_255/0.12)_inset,0_1px_2px_rgb(12_26_46/0.2)] hover:bg-accent-hover",
-  secondary: "bg-surface text-ink ring-1 ring-line shadow-[0_1px_2px_rgb(12_26_46/0.05)] hover:bg-canvas hover:ring-ink-4/50",
+  primary: "bg-accent text-white shadow-[0_1px_2px_rgb(21_38_59/0.16)] hover:bg-accent-hover",
+  secondary: "bg-surface text-ink ring-1 ring-line shadow-[0_1px_2px_rgb(21_38_59/0.04)] hover:bg-canvas hover:ring-ink-4/50",
   ghost: "text-ink-2 hover:bg-sunken hover:text-ink",
   danger: "bg-surface text-deny ring-1 ring-deny/25 hover:bg-deny-soft",
 };
-const SIZES = { sm: "h-7 px-2.5 text-[13px] gap-1.5", md: "h-8 px-3 text-[13px] gap-2", lg: "h-10 px-4 text-sm gap-2" };
+const SIZES = { sm: "h-8 px-3 text-[13px] gap-1.5", md: "h-9 px-3.5 text-[13px] gap-2", lg: "h-11 px-4.5 text-sm gap-2" };
 
 export function Button({
   variant = "primary",
@@ -48,7 +48,7 @@ export function Button({
       {...rest}
       disabled={rest.disabled || busy}
       className={cx(
-        "inline-flex shrink-0 items-center justify-center rounded-md font-medium whitespace-nowrap transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex shrink-0 items-center justify-center rounded-[7px] font-medium whitespace-nowrap transition-[background,color,box-shadow] duration-150 disabled:cursor-not-allowed disabled:opacity-50",
         SIZES[size],
         VARIANTS[variant],
         className,
@@ -84,7 +84,7 @@ export function LinkButton({
 }
 
 export function Spinner({ className }: { className?: string }) {
-  return <LoaderCircle className={cx("size-4 animate-spin", className)} strokeWidth={1.5} />;
+  return <LoaderCircle className={cx("size-4 animate-spin", className)} strokeWidth={1.7} />;
 }
 
 /* ───────────────────────── containers ───────────────────────── */
@@ -105,9 +105,9 @@ export function Card({
   flush?: boolean;
 }) {
   return (
-    <section className={cx("rounded-lg bg-surface ring-1 ring-line shadow-[0_1px_2px_rgb(12_26_46/0.04)]", className)}>
+    <section className={cx("rounded-[10px] bg-surface ring-1 ring-line shadow-[0_1px_2px_rgb(21_38_59/0.035)]", className)}>
       {(title || action) && (
-        <header className="flex items-start justify-between gap-4 border-b border-line-2 px-4 py-3">
+        <header className="flex items-start justify-between gap-4 border-b border-line-2 px-5 py-4">
           <div className="min-w-0">
             {title && <h2 className="text-[13px] font-semibold text-ink">{title}</h2>}
             {subtitle && <p className="mt-0.5 text-[13px] leading-snug text-ink-3">{subtitle}</p>}
@@ -122,10 +122,10 @@ export function Card({
 
 export function PageHeader({ title, description, action }: { title: ReactNode; description?: ReactNode; action?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div className="mb-7 flex flex-wrap items-end justify-between gap-5 border-b border-line-2 pb-5">
       <div className="max-w-3xl">
-        <h1 className="text-[22px] leading-tight font-semibold tracking-[-0.015em] text-balance text-ink">{title}</h1>
-        {description && <p className="mt-1.5 text-sm leading-relaxed text-pretty text-ink-3">{description}</p>}
+        <h1 className="text-[25px] leading-tight font-semibold tracking-[-0.035em] text-balance text-ink sm:text-[28px]">{title}</h1>
+        {description && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-pretty text-ink-3">{description}</p>}
       </div>
       {action}
     </div>
@@ -135,11 +135,11 @@ export function PageHeader({ title, description, action }: { title: ReactNode; d
 /** One compact strip of figures. Deliberately not a row of big-number cards. */
 export function Metrics({ items }: { items: { label: string; value: ReactNode; hint?: ReactNode }[] }) {
   return (
-    <dl className="mb-6 grid grid-cols-2 overflow-hidden rounded-lg bg-surface ring-1 ring-line md:grid-cols-4">
+    <dl className="mb-7 grid grid-cols-2 overflow-hidden rounded-[10px] bg-surface ring-1 ring-line md:grid-cols-4">
       {items.map((m, i) => (
-        <div key={m.label} className={cx("px-4 py-3", i > 0 && "border-line-2 md:border-l", i % 2 === 1 && "border-l", i >= 2 && "border-t md:border-t-0")}>
-          <dt className="text-xs text-ink-3">{m.label}</dt>
-          <dd className="tabular mt-0.5 text-lg font-semibold tracking-tight text-ink">{m.value}</dd>
+        <div key={m.label} className={cx("px-4 py-3.5", i > 0 && "border-line-2 md:border-l", i % 2 === 1 && "border-l", i >= 2 && "border-t md:border-t-0")}>
+          <dt className="text-[11px] font-medium tracking-[0.06em] text-ink-3 uppercase">{m.label}</dt>
+          <dd className="tabular mt-1 text-[21px] font-semibold tracking-[-0.04em] text-ink">{m.value}</dd>
           {m.hint && <dd className="mt-0.5 text-xs text-ink-4">{m.hint}</dd>}
         </div>
       ))}
@@ -149,7 +149,7 @@ export function Metrics({ items }: { items: { label: string; value: ReactNode; h
 
 export function Empty({ title, children, icon: Icon = Info }: { title: string; children?: ReactNode; icon?: LucideIcon }) {
   return (
-    <div className="flex flex-col items-center rounded-lg border border-dashed border-line bg-surface px-6 py-12 text-center">
+    <div className="flex flex-col items-center rounded-[10px] border border-dashed border-line bg-surface px-6 py-14 text-center">
       <Icon className="size-5 text-ink-4" strokeWidth={1.5} />
       <p className="mt-3 text-sm font-medium text-ink">{title}</p>
       {children && <div className="mt-1 max-w-sm text-[13px] text-ink-3">{children}</div>}
@@ -345,13 +345,13 @@ export function Field({ label, hint, children }: { label: string; hint?: ReactNo
 }
 
 export const inputCls =
-  "w-full rounded-md bg-surface px-2.5 py-1.5 text-sm text-ink ring-1 ring-line placeholder:text-ink-4 transition-shadow focus:ring-2 focus:ring-accent focus:outline-none disabled:bg-sunken disabled:text-ink-3";
+  "w-full rounded-[7px] bg-surface px-3 py-2 text-sm text-ink ring-1 ring-line placeholder:text-ink-4 transition-[box-shadow,border-color] focus:ring-2 focus:ring-accent/60 focus:outline-none disabled:bg-sunken disabled:text-ink-3";
 
 export function CandidateId({ id, size = "md" }: { id: string; size?: "md" | "lg" }) {
   return (
     <span
       className={cx(
-        "inline-flex items-center gap-1.5 rounded-md bg-ink font-mono font-medium tracking-wide text-white",
+        "inline-flex items-center gap-1.5 rounded-[6px] bg-ink font-mono font-medium tracking-wide text-white shadow-[0_1px_2px_rgb(21_38_59/0.18)]",
         size === "lg" ? "h-8 px-3 text-sm" : "h-6 px-2 text-xs",
       )}
     >

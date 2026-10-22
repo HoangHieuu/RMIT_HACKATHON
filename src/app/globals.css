@@ -3,48 +3,47 @@
 @theme {
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: Georgia, "Iowan Old Style", "Times New Roman", serif;
 
-  /* ink: navy and navy-tinted greys */
-  --color-ink: #0c1a2e;
-  --color-ink-2: #3b4a60;
-  --color-ink-3: #5a677c;
-  --color-ink-4: #68758a; /* lightest text tier, still >= 4.5:1 on white */
-  --color-mark: #c3cbd6; /* non-text marks only */
+  /* VEIL's palette is taken from the work itself: paper, ink, and a sealed record. */
+  --color-ink: #15263b;
+  --color-ink-2: #40536a;
+  --color-ink-3: #5a6c82;
+  --color-ink-4: #617289;
+  --color-mark: #b9c7d5;
 
-  /* surfaces and hairlines */
-  --color-canvas: #f7f8fa;
+  --color-canvas: #f5f8fb;
   --color-surface: #ffffff;
-  --color-sunken: #f1f3f6;
-  --color-line: #e4e8ee;
-  --color-line-2: #eef1f5;
+  --color-sunken: #eef3f7;
+  --color-line: #dce5ed;
+  --color-line-2: #e9eef3;
 
-  /* action and selection only */
-  --color-accent: #1f5f8b;
-  --color-accent-hover: #194f75;
-  --color-accent-soft: #eaf2f8;
+  --color-accent: #315fe8;
+  --color-accent-hover: #244fcf;
+  --color-accent-soft: #edf2ff;
 
-  /* security outcomes (each colour has exactly one meaning) */
-  --color-seal: #0f766e;
-  --color-seal-soft: #e7f4f2;
-  --color-deny: #b42318;
-  --color-deny-soft: #fdeeec;
-  --color-grant: #15803d;
-  --color-grant-soft: #eaf6ee;
-  --color-final: #0c1a2e;
-  --color-final-soft: #eef1f5;
-  --color-quorum: #5b3fa6;
-  --color-quorum-soft: #f2eefa;
-  --color-warn: #a15c07;
-  --color-warn-soft: #fdf3e3;
+  --color-seal: #16766d;
+  --color-seal-soft: #e8f5f2;
+  --color-deny: #b42335;
+  --color-deny-soft: #fff0f1;
+  --color-grant: #24734f;
+  --color-grant-soft: #eaf6ef;
+  --color-final: #15263b;
+  --color-final-soft: #eef2f6;
+  --color-quorum: #654db5;
+  --color-quorum-soft: #f2effb;
+  --color-warn: #9a5b0a;
+  --color-warn-soft: #fff5e6;
 
-  --shadow-pop: 0 1px 2px rgb(12 26 46 / 0.06), 0 8px 24px -6px rgb(12 26 46 / 0.12);
-  --shadow-window: 0 1px 1px rgb(12 26 46 / 0.04), 0 24px 60px -18px rgb(12 26 46 / 0.28);
+  --shadow-pop: 0 2px 8px rgb(21 38 59 / 0.06), 0 14px 34px -18px rgb(21 38 59 / 0.2);
+  --shadow-window: 0 3px 10px rgb(21 38 59 / 0.05), 0 28px 72px -34px rgb(21 38 59 / 0.22);
 }
 
 html {
   background: var(--color-canvas);
   color: var(--color-ink);
-  scrollbar-color: #c6ced9 transparent;
+  scrollbar-color: #c6d2dd transparent;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -57,14 +56,14 @@ body {
 }
 
 ::selection {
-  background: #cfe2f0;
+  background: #d7e3ff;
   color: var(--color-ink);
 }
 
 :focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline-offset: 3px;
+  border-radius: 5px;
 }
 
 a {
@@ -81,8 +80,9 @@ select {
   width: 10px;
   height: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #d3d9e2;
+  background: #cbd5df;
   border: 3px solid transparent;
   background-clip: padding-box;
   border-radius: 999px;
@@ -106,6 +106,7 @@ input[type="range"] {
     transform: none;
   }
 }
+
 @keyframes veil-toast {
   0%,
   35% {
@@ -118,6 +119,7 @@ input[type="range"] {
     transform: none;
   }
 }
+
 @media (prefers-reduced-motion: no-preference) {
   .veil-rise {
     animation: veil-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;

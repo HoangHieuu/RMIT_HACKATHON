@@ -19,4 +19,6 @@ data/init.log
 data/dev.log
 tsconfig.tsbuildinfo
 .impeccable/
+/.playwright-cli/
+/output/playwright/
 data/init-attempts.log
