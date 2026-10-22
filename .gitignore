@@ -22,3 +22,6 @@ tsconfig.tsbuildinfo
 /.playwright-cli/
 /output/playwright/
 data/init-attempts.log
+
+# Simulated TideCloak (NEXT_PUBLIC_TIDE_MODE=simulated): generated signing keys
+data/sim-keys.json

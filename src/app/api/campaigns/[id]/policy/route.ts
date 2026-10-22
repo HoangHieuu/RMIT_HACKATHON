@@ -2,6 +2,7 @@ import { route, body, str, HttpError } from "@/lib/server/session";
 import { db, audit, newId } from "@/lib/server/db";
 import { getCampaign } from "@/lib/server/repo";
 import { ROLE } from "@/lib/veil";
+import { SIM } from "@/lib/sim/mode";
 
 // Each campaign has two RelationshipAttestation:1 policies, signed by the Tide network after a
 // tide-realm-admin approves them in the Tide enclave:
@@ -97,6 +98,7 @@ function safeParse(s: string) {
 
 async function describe(b64: string) {
   try {
+    if (SIM) return await describeSim(b64);
     const { Models } = await import("@tideorg/js");
     const p = Models.Policy.from(Uint8Array.from(Buffer.from(b64, "base64")));
     const params = (p as unknown as { params: { entries: Map<string, unknown> } }).params.entries;
@@ -115,4 +117,19 @@ async function describe(b64: string) {
     console.warn("[veil] could not parse policy server-side; storing unparsed", err instanceof Error ? err.message : err);
     return null;
   }
+}
+
+// Simulated policies are JSON, signed by the sim network key; check that signature, not just the shape.
+async function describeSim(b64: string) {
+  const { decodePolicy, policySigned, CONTRACT_ID } = await import("@/lib/sim/server/ork");
+  const p = decodePolicy(b64);
+  return {
+    contractId: p.contractId,
+    subjectType: p.params.subjectType ?? "",
+    subjectId: p.params.subjectId ?? "",
+    recordId: p.params.assignmentId ?? "",
+    roles: p.params.roles ?? "",
+    signed: await policySigned(p),
+    isRelationshipPolicy: p.contractId === CONTRACT_ID,
+  };
 }

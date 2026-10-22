@@ -1,5 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
+import { SIM, SIM_ISSUER_BASE } from "@/lib/sim/mode";
+import simConfig from "../../../data/tidecloak.sim.json";
 
 // Playbook: protect-api-nextjs Step 1
 export interface TidecloakConfig {
@@ -15,6 +17,9 @@ export interface TidecloakConfig {
 }
 
 export function loadTideConfig(): TidecloakConfig {
+  // Simulated realm: tokens are verified against the sim IdP key (see tideJWT.ts), not an adapter jwk.
+  if (SIM) return { ...simConfig, "auth-server-url": SIM_ISSUER_BASE, jwk: { keys: [] } };
+
   if (process.env.CLIENT_ADAPTER) {
     return JSON.parse(process.env.CLIENT_ADAPTER);
   }

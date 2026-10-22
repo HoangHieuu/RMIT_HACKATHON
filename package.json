@@ -6,7 +6,9 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "init": "bash scripts/init-veil.sh"
+    "init": "bash scripts/init-veil.sh",
+    "dev:sim": "node scripts/dev-sim.mjs dev",
+    "build:sim": "node scripts/dev-sim.mjs build"
   },
   "dependencies": {
     "@tidecloak/js": "0.14.41",

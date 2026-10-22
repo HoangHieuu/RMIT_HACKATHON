@@ -3,6 +3,7 @@ import type { JWTPayload } from "jose";
 import { statSync } from "fs";
 import { join } from "path";
 import { loadTideConfig } from "./tidecloakConfig";
+import { SIM } from "@/lib/sim/mode";
 
 // Lazy initialization — do NOT load config at module level.
 // Next.js 16 evaluates module-level code during `next build` for static
@@ -24,7 +25,13 @@ function adapterStamp(): string {
   }
 }
 
-function getConfig() {
+async function getConfig() {
+  if (SIM) {
+    // Simulated realm: trust the sim IdP's public key. Imported lazily so live builds never load it.
+    const { simKeys } = await import("@/lib/sim/server/keys");
+    _jwks ??= createLocalJWKSet({ keys: [(await simKeys()).realm.pub] });
+    return { config: loadTideConfig(), JWKS: _jwks };
+  }
   const stamp = adapterStamp();
   if (!_config || stamp !== _configStamp) {
     _configStamp = stamp;
@@ -40,7 +47,7 @@ function getConfig() {
 }
 
 export async function verifyTideJWT(token: string): Promise<JWTPayload> {
-  const { config, JWKS } = getConfig();
+  const { config, JWKS } = await getConfig();
   const { payload } = await jwtVerify(token, JWKS, {
     issuer: `${config["auth-server-url"].replace(/\/+$/, "")}/realms/${config.realm}`,
   });

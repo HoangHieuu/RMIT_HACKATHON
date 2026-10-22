@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTideCloak } from "@tidecloak/nextjs";
+import { useTideCloak } from "@/lib/tc";
 import { useEffect, type ReactNode } from "react";
 import {
   ArrowUpRight,

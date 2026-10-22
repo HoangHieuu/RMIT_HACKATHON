@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, RefreshCw, RotateCcw } from "lucide-react";
-import { useTideCloak } from "@tidecloak/nextjs";
+import { useTideCloak } from "@/lib/tc";
 import { useApi } from "@/lib/client/api";
 import { useRoles } from "@/components/AppShell";
 import { Badge, Button, Card, Enforcer, Notice, PageHeader, SecurityState, StageBadge, cx } from "@/components/ui";
