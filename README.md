@@ -25,4 +25,6 @@ One complete campaign, Graduate Analyst Challenge 2026, with synthetic data and 
 
 Tide network overloaded? Run `npm run dev:sim` for a clearly labelled simulation: [docs/SIMULATED.md](docs/SIMULATED.md).
 
+Two-minute demo: [docs/veil-demo.mp4](docs/veil-demo.mp4).
+
 Everything below is setup and reference: see [docs/SETUP.md](docs/SETUP.md), [docs/TEST-CHECKLIST.md](docs/TEST-CHECKLIST.md) and [docs/DEMO-SCRIPT.md](docs/DEMO-SCRIPT.md).
