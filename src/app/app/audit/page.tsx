@@ -53,7 +53,7 @@ export default function AuditPage() {
                 role="tab"
                 aria-selected={filter === f.id}
                 onClick={() => setFilter(f.id)}
-                className={cx("h-7 rounded px-3 text-[13px]", filter === f.id ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgb(12_26_46/0.08)]" : "text-ink-3 hover:text-ink")}
+                className={cx("h-7 rounded px-3 text-sm", filter === f.id ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgb(12_26_46/0.08)]" : "text-ink-3 hover:text-ink")}
               >
                 {f.label}
                 <span className="tabular ml-1.5 text-ink-3">
@@ -66,7 +66,7 @@ export default function AuditPage() {
       />
       <Card flush>
         <div className="overflow-x-auto">
-          <table className="w-full text-[13px]">
+          <table className="w-full text-sm">
             <thead>
               <tr>
                 <th className={th}>Time</th>
@@ -85,19 +85,19 @@ export default function AuditPage() {
                   <td className={td}>
                     <div className="flex flex-wrap items-center gap-2">
                       <Enforcer by={layerOf(e)} compact />
-                      <span className="font-mono text-xs">{e.action}</span>
+                      <span className="font-mono text-[13px]">{e.action}</span>
                     </div>
                   </td>
-                  <td className={`${td} font-mono text-xs text-ink-2`}>{e.target_id ?? "—"}</td>
+                  <td className={`${td} font-mono text-[13px] text-ink-2`}>{e.target_id ?? "—"}</td>
                   <td className={td}>
                     <Badge tone={e.outcome === "ok" ? "grant" : e.outcome === "denied" ? "deny" : "warn"}>{e.outcome}</Badge>
                   </td>
-                  <td className={`${td} max-w-sm text-xs break-words text-ink-3`}>{e.detail}</td>
+                  <td className={`${td} max-w-sm text-[13px] break-words text-ink-3`}>{e.detail}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {shown.length === 0 && <p className="border-t border-line-2 px-4 py-8 text-center text-[13px] text-ink-3">No events match this filter.</p>}
+          {shown.length === 0 && <p className="border-t border-line-2 px-4 py-8 text-center text-sm text-ink-3">No events match this filter.</p>}
         </div>
       </Card>
     </div>

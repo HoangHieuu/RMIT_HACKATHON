@@ -118,7 +118,7 @@ export default function CampaignsPage() {
 
       <Card flush>
         <div className="overflow-x-auto">
-          <table className="w-full text-[13px]">
+          <table className="w-full text-sm">
             <thead>
               <tr>
                 <th className={th}>Campaign</th>
@@ -136,7 +136,7 @@ export default function CampaignsPage() {
                     <Link href={`/app/campaigns/${c.id}`} className="font-medium text-ink hover:text-accent">
                       {c.title}
                     </Link>
-                    <p className="font-mono text-[11px] text-ink-4">{c.id}</p>
+                    <p className="font-mono text-xs text-ink-4">{c.id}</p>
                   </td>
                   <td className={td}>
                     <StageBadge stage={c.status} />

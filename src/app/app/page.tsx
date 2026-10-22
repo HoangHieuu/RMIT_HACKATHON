@@ -101,7 +101,7 @@ export default function Overview() {
         <Card title="Your verified permissions" className="mb-6" action={<Enforcer by="veil" />}>
           <div className="grid gap-5 md:grid-cols-[1fr_auto]">
             <div>
-              <p className="text-xs text-ink-3">Roles in your token</p>
+              <p className="text-[13px] text-ink-3">Roles in your token</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {me.roles.length ? (
                   me.roles.map((r) => (
@@ -110,12 +110,12 @@ export default function Overview() {
                     </Badge>
                   ))
                 ) : (
-                  <span className="text-[13px] text-ink-3">No VEIL roles.</span>
+                  <span className="text-sm text-ink-3">No VEIL roles.</span>
                 )}
               </div>
             </div>
             <div className="md:text-right">
-              <p className="text-xs text-ink-3">Candidate identities</p>
+              <p className="text-[13px] text-ink-3">Candidate identities</p>
               <div className="mt-2">
                 {me.capabilities.disclose ? <SecurityState kind="authorized" label="You may disclose (network permitting)" /> : <SecurityState kind="denied" label="You cannot decrypt" />}
               </div>
@@ -149,21 +149,21 @@ export default function Overview() {
                 <li key={s.id} className={cx("flex items-start gap-3 px-4 py-3", i && "border-t border-line-2", isNext && "bg-accent-soft/60")}>
                   <span
                     className={cx(
-                      "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-[11px] font-semibold",
+                      "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-xs font-semibold",
                       s.done ? "bg-grant text-white" : isNext ? "bg-accent text-white" : "bg-surface text-ink-3 ring-1 ring-line",
                     )}
                   >
                     {s.done ? <Check className="size-3" strokeWidth={2} /> : i + 1}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className={cx("text-[13px]", s.done ? "text-ink-3" : "font-medium text-ink")}>{s.title}</p>
-                    <p className="mt-0.5 text-xs text-ink-3">
+                    <p className={cx("text-sm", s.done ? "text-ink-3" : "font-medium text-ink")}>{s.title}</p>
+                    <p className="mt-0.5 text-[13px] text-ink-3">
                       as <span className="font-mono text-ink-2">{s.persona}</span>
                       {s.detail ? ` · ${s.detail}` : ""}
                     </p>
                   </div>
                   {isNext && (
-                    <Link href={s.where} className="inline-flex shrink-0 items-center gap-1 text-[13px] font-medium text-accent hover:underline">
+                    <Link href={s.where} className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-accent hover:underline">
                       Go <ArrowRight className="size-3.5" strokeWidth={1.5} />
                     </Link>
                   )}
@@ -178,12 +178,12 @@ export default function Overview() {
         <ul>
           {PERSONAS.map((p, i) => (
             <li key={p.user} className={cx("grid items-start gap-x-4 gap-y-1 px-4 py-3 sm:grid-cols-[110px_190px_1fr]", i && "border-t border-line-2")}>
-              <span className="font-mono text-[13px] font-medium">{p.user}</span>
+              <span className="font-mono text-sm font-medium">{p.user}</span>
               <span className="flex flex-wrap items-center gap-1.5">
                 <Badge>{p.app}</Badge>
                 {p.committee && <Badge tone="quorum">Committee</Badge>}
               </span>
-              <span className="text-[13px] text-ink-2">{p.does}</span>
+              <span className="text-sm text-ink-2">{p.does}</span>
             </li>
           ))}
         </ul>

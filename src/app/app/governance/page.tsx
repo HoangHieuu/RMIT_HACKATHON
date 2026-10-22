@@ -179,7 +179,7 @@ export default function GovernancePage() {
         title="Governance"
         description="No single person holds the key. Who may encrypt or decrypt identities is written into policies signed by the Tide network, and the privileged roles those policies name change only through TideCloak's quorum."
         action={
-          <a href={consoleUrl} target="_blank" rel="noreferrer" className="inline-flex h-8 items-center gap-1.5 rounded-md px-3 text-[13px] font-medium text-ink ring-1 ring-line hover:bg-canvas">
+          <a href={consoleUrl} target="_blank" rel="noreferrer" className="inline-flex h-8 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-ink ring-1 ring-line hover:bg-canvas">
             TideCloak console <ExternalLink className="size-3.5" strokeWidth={1.5} />
           </a>
         }
@@ -217,27 +217,27 @@ export default function GovernancePage() {
         }
         flush
       >
-        {!isRealmAdmin && <p className="p-4 text-[13px] text-ink-3">Visible to Tide realm admins.</p>}
+        {!isRealmAdmin && <p className="p-4 text-sm text-ink-3">Visible to Tide realm admins.</p>}
         {isRealmAdmin && (
           <div className="flex flex-wrap items-end gap-3 border-b border-line-2 bg-canvas px-4 py-3">
-            <label className="text-xs text-ink-3">
+            <label className="text-[13px] text-ink-3">
               Action
-              <select className="mt-1 block h-8 rounded-md bg-surface px-2 text-[13px] text-ink ring-1 ring-line" value={privAction} onChange={(e) => setPrivAction(e.target.value as "grant" | "revoke")}>
+              <select className="mt-1 block h-8 rounded-md bg-surface px-2 text-sm text-ink ring-1 ring-line" value={privAction} onChange={(e) => setPrivAction(e.target.value as "grant" | "revoke")}>
                 <option value="grant">Grant</option>
                 <option value="revoke">Revoke</option>
               </select>
             </label>
-            <label className="text-xs text-ink-3">
+            <label className="text-[13px] text-ink-3">
               Role
-              <select className="mt-1 block h-8 rounded-md bg-surface px-2 text-[13px] text-ink ring-1 ring-line" value={privRole} onChange={(e) => setPrivRole(e.target.value)}>
+              <select className="mt-1 block h-8 rounded-md bg-surface px-2 text-sm text-ink ring-1 ring-line" value={privRole} onChange={(e) => setPrivRole(e.target.value)}>
                 <option value={ROLE.officer}>veil-disclosure-officer</option>
                 <option value={ROLE.decryptor}>_tide_decryptor</option>
                 <option value={ROLE.realmAdmin}>tide-realm-admin</option>
               </select>
             </label>
-            <label className="text-xs text-ink-3">
+            <label className="text-[13px] text-ink-3">
               {privAction === "grant" ? "to user" : "from user"}
-              <select className="mt-1 block h-8 min-w-36 rounded-md bg-surface px-2 text-[13px] text-ink ring-1 ring-line" value={target} onChange={(e) => setTarget(e.target.value)}>
+              <select className="mt-1 block h-8 min-w-36 rounded-md bg-surface px-2 text-sm text-ink ring-1 ring-line" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {users.map((u) => (
                   <option key={u.id} value={u.username}>
                     {u.username}
@@ -255,10 +255,10 @@ export default function GovernancePage() {
             <ErrorText error={crErr} />
           </div>
         )}
-        {isRealmAdmin && crs && crs.length === 0 && <p className="p-4 text-[13px] text-ink-3">No pending or recent change requests.</p>}
+        {isRealmAdmin && crs && crs.length === 0 && <p className="p-4 text-sm text-ink-3">No pending or recent change requests.</p>}
         {isRealmAdmin && crs && crs.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full text-[13px]">
+            <table className="w-full text-sm">
               <thead>
                 <tr>
                   <th className={th}>Change</th>
@@ -276,20 +276,20 @@ export default function GovernancePage() {
                     <tr key={cr.id} className={`${tr} align-top`}>
                       <td className={td}>
                         <p className="font-medium">{cr.actionType.replace(/_/g, " ").toLowerCase()}</p>
-                        <p className="text-xs text-ink-4">{cr.entityType.toLowerCase()}</p>
+                        <p className="text-[13px] text-ink-4">{cr.entityType.toLowerCase()}</p>
                       </td>
-                      <td className={`${td} max-w-[320px] text-xs break-words text-ink-2`}>{describeCr(cr)}</td>
+                      <td className={`${td} max-w-[320px] text-[13px] break-words text-ink-2`}>{describeCr(cr)}</td>
                       <td className={td}>
                         <div className="flex items-center gap-1" aria-label={`${count} of ${need} approvals`}>
                           {Array.from({ length: Math.max(need, count) }, (_, i) => (
                             <span key={i} className={cx("h-1.5 w-5 rounded-full", i < count ? "bg-quorum" : "bg-line")} />
                           ))}
-                          <span className="tabular ml-1.5 text-xs text-ink-3">
+                          <span className="tabular ml-1.5 text-[13px] text-ink-3">
                             {count}/{need}
                           </span>
                         </div>
                         {Array.isArray(cr.authorizers) && cr.authorizers.length > 0 && (
-                          <p className="mt-1 text-xs text-ink-3">{cr.authorizers.map((a) => a.username).filter(Boolean).join(", ")}</p>
+                          <p className="mt-1 text-[13px] text-ink-3">{cr.authorizers.map((a) => a.username).filter(Boolean).join(", ")}</p>
                         )}
                       </td>
                       <td className={td}>
@@ -316,10 +316,10 @@ export default function GovernancePage() {
         {campaigns.map((c, i) => (
           <div key={c.id} className={cx("grid gap-4 px-4 py-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2fr)]", i && "border-t border-line-2")}>
             <div className="min-w-0">
-              <p className="text-[13px] font-medium">{c.title}</p>
+              <p className="text-sm font-medium">{c.title}</p>
               <div className="mt-1 flex items-center gap-2">
                 <StageBadge stage={c.status} />
-                <span className="font-mono text-[11px] text-ink-4">{c.id}</span>
+                <span className="font-mono text-xs text-ink-4">{c.id}</span>
               </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -329,7 +329,7 @@ export default function GovernancePage() {
                 return (
                   <div key={purpose} className="flex flex-col rounded-md p-3 ring-1 ring-line">
                     <div className="flex items-center justify-between gap-2">
-                      <p className="text-[13px] font-medium">{spec.label}</p>
+                      <p className="text-sm font-medium">{spec.label}</p>
                       {signed ? (
                         <Badge tone="seal" icon={Lock}>
                           Signed
@@ -338,8 +338,8 @@ export default function GovernancePage() {
                         <Badge tone="warn">Not signed</Badge>
                       )}
                     </div>
-                    <p className="mt-1 flex-1 text-xs leading-relaxed text-ink-3">{spec.explains}</p>
-                    <p className="mt-2 font-mono text-[11px] text-ink-2">
+                    <p className="mt-1 flex-1 text-[13px] leading-relaxed text-ink-3">{spec.explains}</p>
+                    <p className="mt-2 font-mono text-xs text-ink-2">
                       Role:{spec.subject.id} · {spec.access}
                     </p>
                     {isRealmAdmin && (
@@ -353,7 +353,7 @@ export default function GovernancePage() {
             </div>
           </div>
         ))}
-        {!isRealmAdmin && <p className="border-t border-line-2 px-4 py-3 text-xs text-ink-3">Only a Tide realm admin can approve a policy, in their own Tide enclave.</p>}
+        {!isRealmAdmin && <p className="border-t border-line-2 px-4 py-3 text-[13px] text-ink-3">Only a Tide realm admin can approve a policy, in their own Tide enclave.</p>}
       </Card>
 
       {/* layers */}
@@ -365,8 +365,8 @@ export default function GovernancePage() {
         ].map((l) => (
           <div key={l.by} className="bg-surface p-4">
             <Enforcer by={l.by} />
-            <p className="mt-3 text-[13px] font-semibold">{l.title}</p>
-            <p className="mt-1 text-[13px] leading-relaxed text-ink-3">{l.text}</p>
+            <p className="mt-3 text-sm font-semibold">{l.title}</p>
+            <p className="mt-1 text-sm leading-relaxed text-ink-3">{l.text}</p>
           </div>
         ))}
       </div>

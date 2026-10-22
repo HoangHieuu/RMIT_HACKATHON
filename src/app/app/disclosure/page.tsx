@@ -150,12 +150,12 @@ export default function DisclosurePage() {
               <ul className="-my-1 divide-y divide-line-2">
                 {detail.disclosureRequests.map((r) => (
                   <li key={r.id} className="py-3 first:pt-1 last:pb-1">
-                    <div className="flex items-center justify-between gap-2 text-[13px]">
+                    <div className="flex items-center justify-between gap-2 text-sm">
                       <span className="font-medium">Requested by {r.requested_by}</span>
                       <Badge tone={r.status === "APPROVED" ? "grant" : r.status === "DENIED" ? "deny" : "warn"}>{r.status.toLowerCase()}</Badge>
                     </div>
-                    <p className="mt-1 text-[13px] text-ink-2">{r.reason}</p>
-                    {r.approved_by && <p className="mt-1 text-xs text-ink-3">Decided by {r.approved_by}</p>}
+                    <p className="mt-1 text-sm text-ink-2">{r.reason}</p>
+                    {r.approved_by && <p className="mt-1 text-[13px] text-ink-3">Decided by {r.approved_by}</p>}
                     {r.status === "PENDING" && isOfficer && (
                       <div className="mt-3 flex gap-2">
                         <Button busy={busy === "approve"} onClick={() => run("approve", () => api(`/api/disclosure-requests/${r.id}`, { method: "POST", body: { decision: "APPROVED" } }))}>
@@ -170,11 +170,11 @@ export default function DisclosurePage() {
                 ))}
               </ul>
             ) : (
-              <p className="text-[13px] text-ink-3">No disclosure requests yet.</p>
+              <p className="text-sm text-ink-3">No disclosure requests yet.</p>
             )}
             {has(ROLE.orgAdmin) && c?.status === "FINALIZED" && !pending && (
               <div className="mt-4 border-t border-line-2 pt-4">
-                <label className="text-[13px] font-medium" htmlFor="reason">
+                <label className="text-sm font-medium" htmlFor="reason">
                   Reason for disclosure
                 </label>
                 <textarea id="reason" className={`${inputCls} mt-1.5 min-h-16`} value={reason} onChange={(e) => setReason(e.target.value)} />
@@ -184,13 +184,13 @@ export default function DisclosurePage() {
               </div>
             )}
             {c && !["FINALIZED", "DISCLOSURE", "CLOSED"].includes(c.status) && (
-              <p className="mt-3 text-xs text-ink-3">Disclosure can be requested once every review is finalized and the campaign is Finalized.</p>
+              <p className="mt-3 text-[13px] text-ink-3">Disclosure can be requested once every review is finalized and the campaign is Finalized.</p>
             )}
             <ErrorText error={error} />
           </Card>
 
           <Card title="Who can decrypt, and why" flush>
-            <ul className="text-[13px]">
+            <ul className="text-sm">
               {[
                 { who: "Reviewers, org admins, VEIL's server", ok: false, why: "They do not hold the role the campaign's read policy names.", by: "tide" as const },
                 { who: "One Tide realm admin acting alone", ok: false, why: "Admin rights don't satisfy the policy, and self-granting the officer role needs 2 of 3 admins.", by: "quorum" as const },
@@ -211,7 +211,7 @@ export default function DisclosurePage() {
 
         <Card title="Candidates" subtitle={isOfficer ? "Decryption happens in your browser, through the Tide network." : "You can attempt disclosure. Both layers will check you."} flush>
           {results.length === 0 ? (
-            <p className="p-4 text-[13px] text-ink-3">No submissions.</p>
+            <p className="p-4 text-sm text-ink-3">No submissions.</p>
           ) : (
             <ul>
               {results.map((r, i) => {
@@ -221,9 +221,9 @@ export default function DisclosurePage() {
                   <li key={r.id} className={cx("px-4 py-3", i && "border-t border-line-2")}>
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <span className="tabular w-4 text-[13px] text-ink-4">{i + 1}</span>
+                        <span className="tabular w-4 text-sm text-ink-4">{i + 1}</span>
                         <CandidateId id={r.anonymous_candidate_id} />
-                        <span className="tabular text-[13px] font-semibold">{r.score ?? "—"}</span>
+                        <span className="tabular text-sm font-semibold">{r.score ?? "—"}</span>
                       </div>
                       {id ? (
                         <SecurityState kind="authorized" />
@@ -241,7 +241,7 @@ export default function DisclosurePage() {
                       )}
                     </div>
                     {id && (
-                      <div className="mt-2.5 ml-7 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-grant-soft px-3 py-2 text-[13px] ring-1 ring-grant/20 ring-inset">
+                      <div className="mt-2.5 ml-7 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-grant-soft px-3 py-2 text-sm ring-1 ring-grant/20 ring-inset">
                         <span className="font-semibold text-ink">{id.fullName}</span>
                         <span className="text-ink-2">{id.university}</span>
                         <span className="text-ink-3">{id.email}</span>

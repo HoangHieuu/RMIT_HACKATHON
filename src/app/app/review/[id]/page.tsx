@@ -95,11 +95,11 @@ export default function ReviewDetail({ params }: { params: Promise<{ id: string 
     }
   }
 
-  if (!d) return <div className="pt-6">{error ? <Notice kind="denied" title={error} by="veil" /> : <p className="text-[13px] text-ink-3">Loading…</p>}</div>;
+  if (!d) return <div className="pt-6">{error ? <Notice kind="denied" title={error} by="veil" /> : <p className="text-sm text-ink-3">Loading…</p>}</div>;
 
   return (
     <div>
-      <Link href="/app/review" className="inline-flex items-center gap-1.5 text-[13px] text-ink-3 hover:text-ink">
+      <Link href="/app/review" className="inline-flex items-center gap-1.5 text-sm text-ink-3 hover:text-ink">
         <ArrowLeft className="size-3.5" strokeWidth={1.5} /> Blind review
       </Link>
       <div className="mt-3 mb-6 flex flex-wrap items-center justify-between gap-4">
@@ -107,7 +107,7 @@ export default function ReviewDetail({ params }: { params: Promise<{ id: string 
           <CandidateId id={d.submission.candidateId} size="lg" />
           <SecurityState kind="sealed" by="tide" />
         </div>
-        <div className="flex items-center gap-3 text-[13px] text-ink-3">
+        <div className="flex items-center gap-3 text-sm text-ink-3">
           {d.campaign.title}
           <StageBadge stage={d.campaign.status} />
         </div>
@@ -118,13 +118,13 @@ export default function ReviewDetail({ params }: { params: Promise<{ id: string 
           <article className="rounded-lg ring-1 ring-line">
             <header className="border-b border-line-2 px-5 py-4">
               <h1 className="text-[17px] leading-snug font-semibold tracking-[-0.01em]">{d.submission.title}</h1>
-              <p className="mt-1 text-xs text-ink-3">Submitted {new Date(d.submission.submittedAt).toLocaleString()}</p>
+              <p className="mt-1 text-[13px] text-ink-3">Submitted {new Date(d.submission.submittedAt).toLocaleString()}</p>
             </header>
             <div className="max-w-[68ch] px-5 py-5 text-[15px] leading-[1.7] whitespace-pre-wrap text-ink">{d.submission.work}</div>
             {d.submission.skills && (
               <div className="border-t border-line-2 px-5 py-4">
-                <p className="text-xs font-medium text-ink-3">Skills and experience</p>
-                <p className="mt-1 text-[13px] text-ink-2">{d.submission.skills}</p>
+                <p className="text-[13px] font-medium text-ink-3">Skills and experience</p>
+                <p className="mt-1 text-sm text-ink-2">{d.submission.skills}</p>
               </div>
             )}
           </article>
@@ -134,29 +134,29 @@ export default function ReviewDetail({ params }: { params: Promise<{ id: string 
         <aside className="lg:sticky lg:top-6 lg:self-start">
           <div className="rounded-lg ring-1 ring-line">
             <header className="flex items-center justify-between border-b border-line-2 px-4 py-3">
-              <h2 className="text-[13px] font-semibold">Scoring rubric</h2>
-              <span className="text-xs text-ink-3">0–10 per criterion</span>
+              <h2 className="text-sm font-semibold">Scoring rubric</h2>
+              <span className="text-[13px] text-ink-3">0–10 per criterion</span>
             </header>
             <div className="space-y-5 p-4">
               {d.campaign.criteria.map((c) => (
                 <div key={c.key}>
                   <div className="flex items-baseline justify-between gap-3">
-                    <p className="text-[13px] font-medium">
+                    <p className="text-sm font-medium">
                       {c.label} <span className="font-normal text-ink-4">{c.weight}%</span>
                     </p>
                     <span className="tabular text-sm font-semibold">{scores[c.key] ?? 0}</span>
                   </div>
-                  {c.description && <p className="text-xs text-ink-3">{c.description}</p>}
+                  {c.description && <p className="text-[13px] text-ink-3">{c.description}</p>}
                   <DivisionScale label={c.label} value={scores[c.key] ?? 0} disabled={locked} onChange={(v) => setScores({ ...scores, [c.key]: v })} />
                 </div>
               ))}
               <div>
-                <p className="text-[13px] font-medium">Feedback</p>
+                <p className="text-sm font-medium">Feedback</p>
                 <textarea className={`${inputCls} mt-1.5 min-h-24`} disabled={locked} value={feedback} onChange={(e) => setFeedback(e.target.value)} />
               </div>
             </div>
             <div className="flex items-center justify-between border-t border-line-2 bg-canvas px-4 py-3">
-              <span className="text-[13px] text-ink-2">Weighted total</span>
+              <span className="text-sm text-ink-2">Weighted total</span>
               <span className="tabular text-2xl font-semibold tracking-tight">{total.toFixed(1)}</span>
             </div>
             <div className="border-t border-line-2 p-4">
@@ -176,11 +176,11 @@ export default function ReviewDetail({ params }: { params: Promise<{ id: string 
                   </Button>
                 </div>
               )}
-              {saved === "draft" && <p className="mt-2 text-xs text-grant">Draft saved.</p>}
+              {saved === "draft" && <p className="mt-2 text-[13px] text-grant">Draft saved.</p>}
               <ErrorText error={error} />
             </div>
           </div>
-          <p className="mt-3 flex flex-wrap items-center gap-2 text-xs text-ink-3">
+          <p className="mt-3 flex flex-wrap items-center gap-2 text-[13px] text-ink-3">
             This response carried no identity. <Enforcer by="veil" />
           </p>
         </aside>

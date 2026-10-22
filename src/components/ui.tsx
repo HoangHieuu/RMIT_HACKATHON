@@ -33,7 +33,7 @@ const VARIANTS: Record<Variant, string> = {
   ghost: "text-ink-2 hover:bg-sunken hover:text-ink",
   danger: "bg-surface text-deny ring-1 ring-deny/25 hover:bg-deny-soft",
 };
-const SIZES = { sm: "h-8 px-3 text-[13px] gap-1.5", md: "h-9 px-3.5 text-[13px] gap-2", lg: "h-11 px-4.5 text-sm gap-2" };
+const SIZES = { sm: "h-9 px-3.5 text-sm gap-2", md: "h-11 px-4 text-sm gap-2.5", lg: "h-12 px-5 text-base gap-2.5" };
 
 export function Button({
   variant = "primary",
@@ -48,7 +48,7 @@ export function Button({
       {...rest}
       disabled={rest.disabled || busy}
       className={cx(
-        "inline-flex shrink-0 items-center justify-center rounded-[7px] font-medium whitespace-nowrap transition-[background,color,box-shadow] duration-150 disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex shrink-0 items-center justify-center rounded-lg font-semibold whitespace-nowrap transition-[background,color,box-shadow] duration-150 disabled:cursor-not-allowed disabled:opacity-50",
         SIZES[size],
         VARIANTS[variant],
         className,
@@ -76,7 +76,7 @@ export function LinkButton({
   arrow?: boolean;
 }) {
   return (
-    <Link href={href} className={cx("inline-flex items-center justify-center rounded-md font-medium whitespace-nowrap transition-colors duration-150", SIZES[size], VARIANTS[variant], className)}>
+    <Link href={href} className={cx("inline-flex items-center justify-center rounded-lg font-semibold whitespace-nowrap transition-colors duration-150", SIZES[size], VARIANTS[variant], className)}>
       {children}
       {arrow && <ArrowRight className="size-3.5" strokeWidth={1.5} />}
     </Link>
@@ -105,27 +105,27 @@ export function Card({
   flush?: boolean;
 }) {
   return (
-    <section className={cx("rounded-[10px] bg-surface ring-1 ring-line shadow-[0_1px_2px_rgb(21_38_59/0.035)]", className)}>
+    <section className={cx("rounded-2xl bg-surface ring-1 ring-line shadow-[0_2px_8px_rgb(21_38_59/0.035)]", className)}>
       {(title || action) && (
-        <header className="flex items-start justify-between gap-4 border-b border-line-2 px-5 py-4">
+        <header className="flex items-start justify-between gap-5 border-b border-line-2 px-5 py-5 sm:px-6">
           <div className="min-w-0">
-            {title && <h2 className="text-[13px] font-semibold text-ink">{title}</h2>}
-            {subtitle && <p className="mt-0.5 text-[13px] leading-snug text-ink-3">{subtitle}</p>}
+            {title && <h2 className="text-base font-semibold tracking-[-0.02em] text-ink">{title}</h2>}
+            {subtitle && <p className="mt-1 text-sm leading-relaxed text-ink-3">{subtitle}</p>}
           </div>
           {action}
         </header>
       )}
-      <div className={flush ? "" : "p-4"}>{children}</div>
+      <div className={flush ? "" : "p-5 sm:p-6"}>{children}</div>
     </section>
   );
 }
 
 export function PageHeader({ title, description, action }: { title: ReactNode; description?: ReactNode; action?: ReactNode }) {
   return (
-    <div className="mb-7 flex flex-wrap items-end justify-between gap-5 border-b border-line-2 pb-5">
-      <div className="max-w-3xl">
-        <h1 className="text-[25px] leading-tight font-semibold tracking-[-0.035em] text-balance text-ink sm:text-[28px]">{title}</h1>
-        {description && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-pretty text-ink-3">{description}</p>}
+    <div className="mb-9 flex flex-wrap items-end justify-between gap-6 border-b border-line-2 pb-7">
+      <div className="max-w-4xl">
+        <h1 className="text-[clamp(2.25rem,4vw,3rem)] leading-[1.06] font-semibold tracking-[-0.055em] text-balance text-ink">{title}</h1>
+        {description && <p className="mt-3 max-w-3xl text-base leading-[1.7] text-pretty text-ink-3">{description}</p>}
       </div>
       {action}
     </div>
@@ -135,12 +135,12 @@ export function PageHeader({ title, description, action }: { title: ReactNode; d
 /** One compact strip of figures. Deliberately not a row of big-number cards. */
 export function Metrics({ items }: { items: { label: string; value: ReactNode; hint?: ReactNode }[] }) {
   return (
-    <dl className="mb-7 grid grid-cols-2 overflow-hidden rounded-[10px] bg-surface ring-1 ring-line md:grid-cols-4">
+    <dl className="mb-8 grid grid-cols-2 overflow-hidden rounded-2xl bg-surface ring-1 ring-line md:grid-cols-4">
       {items.map((m, i) => (
-        <div key={m.label} className={cx("px-4 py-3.5", i > 0 && "border-line-2 md:border-l", i % 2 === 1 && "border-l", i >= 2 && "border-t md:border-t-0")}>
-          <dt className="text-[11px] font-medium tracking-[0.06em] text-ink-3 uppercase">{m.label}</dt>
-          <dd className="tabular mt-1 text-[21px] font-semibold tracking-[-0.04em] text-ink">{m.value}</dd>
-          {m.hint && <dd className="mt-0.5 text-xs text-ink-4">{m.hint}</dd>}
+        <div key={m.label} className={cx("px-5 py-4.5 sm:px-6 sm:py-5", i > 0 && "border-line-2 md:border-l", i % 2 === 1 && "border-l", i >= 2 && "border-t md:border-t-0")}>
+          <dt className="text-xs font-semibold tracking-[0.07em] text-ink-3 uppercase">{m.label}</dt>
+          <dd className="tabular mt-1.5 text-[28px] leading-none font-semibold tracking-[-0.045em] text-ink">{m.value}</dd>
+          {m.hint && <dd className="mt-1.5 text-[13px] text-ink-4">{m.hint}</dd>}
         </div>
       ))}
     </dl>
@@ -149,18 +149,18 @@ export function Metrics({ items }: { items: { label: string; value: ReactNode; h
 
 export function Empty({ title, children, icon: Icon = Info }: { title: string; children?: ReactNode; icon?: LucideIcon }) {
   return (
-    <div className="flex flex-col items-center rounded-[10px] border border-dashed border-line bg-surface px-6 py-14 text-center">
-      <Icon className="size-5 text-ink-4" strokeWidth={1.5} />
-      <p className="mt-3 text-sm font-medium text-ink">{title}</p>
-      {children && <div className="mt-1 max-w-sm text-[13px] text-ink-3">{children}</div>}
+    <div className="flex flex-col items-center rounded-2xl border border-dashed border-line bg-surface px-6 py-16 text-center">
+      <Icon className="size-6 text-ink-4" strokeWidth={1.5} />
+      <p className="mt-4 text-base font-medium text-ink">{title}</p>
+      {children && <div className="mt-2 max-w-sm text-sm leading-relaxed text-ink-3">{children}</div>}
     </div>
   );
 }
 
 /* ───────────────────────── tables ───────────────────────── */
 
-export const th = "h-9 px-4 text-left text-xs font-medium text-ink-3 whitespace-nowrap";
-export const td = "px-4 py-2.5 align-middle";
+export const th = "h-12 px-5 text-left text-xs font-semibold tracking-[0.04em] text-ink-3 whitespace-nowrap";
+export const td = "px-5 py-4 align-middle";
 export const tr = "border-t border-line-2 transition-colors hover:bg-canvas/70";
 
 /* ───────────────────────── badges & state ───────────────────────── */
@@ -179,8 +179,8 @@ const TONES: Record<Tone, string> = {
 
 export function Badge({ tone = "neutral", children, className, icon: Icon }: { tone?: Tone; children: ReactNode; className?: string; icon?: LucideIcon }) {
   return (
-    <span className={cx("inline-flex h-5 items-center gap-1 rounded-[5px] px-1.5 text-xs font-medium whitespace-nowrap ring-1 ring-inset", TONES[tone], className)}>
-      {Icon && <Icon className="size-3" strokeWidth={1.5} />}
+    <span className={cx("inline-flex min-h-6 items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold whitespace-nowrap ring-1 ring-inset", TONES[tone], className)}>
+      {Icon && <Icon className="size-3.5" strokeWidth={1.5} />}
       {children}
     </span>
   );
@@ -200,8 +200,8 @@ export function stageLabel(s: Stage) {
 /** Linear-style status: a small drawn dot whose fill encodes progress, plus the word. */
 export function StageBadge({ stage }: { stage: Stage }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-[13px] whitespace-nowrap text-ink-2">
-      <span className={cx("inline-block size-3 rounded-full border-[1.5px]", STAGE_DOT[stage])} />
+    <span className="inline-flex items-center gap-2 text-sm whitespace-nowrap text-ink-2">
+      <span className={cx("inline-block size-3.5 rounded-full border-[1.5px]", STAGE_DOT[stage])} />
       {stageLabel(stage)}
     </span>
   );
@@ -216,7 +216,7 @@ export function StageStepper({ stage }: { stage: Stage }) {
           <span className="flex items-center gap-2 whitespace-nowrap">
             <span
               className={cx(
-                "grid size-5 place-items-center rounded-full text-[11px] font-semibold",
+                "grid size-6 place-items-center rounded-full text-xs font-semibold",
                 i < at && "bg-ink text-white",
                 i === at && "bg-accent text-white ring-4 ring-accent-soft",
                 i > at && "bg-surface text-ink-4 ring-1 ring-line",
@@ -224,7 +224,7 @@ export function StageStepper({ stage }: { stage: Stage }) {
             >
               {i < at ? <CircleCheck className="size-3" strokeWidth={1.5} /> : i + 1}
             </span>
-            <span className={cx("text-[13px]", i === at ? "font-semibold text-ink" : i < at ? "text-ink-2" : "text-ink-4")}>{stageLabel(s)}</span>
+            <span className={cx("text-sm", i === at ? "font-semibold text-ink" : i < at ? "text-ink-2" : "text-ink-4")}>{stageLabel(s)}</span>
           </span>
           {i < STAGES.length - 1 && <span className={cx("mx-3 h-px flex-1", i < at ? "bg-ink/40" : "bg-line")} />}
         </li>
@@ -253,7 +253,7 @@ export function Enforcer({ by, className, compact }: { by: EnforcerKind; classNa
   return (
     <span
       title={`Enforced by: ${e.label}`}
-      className={cx("inline-flex h-5 items-center gap-1 rounded-full px-2 text-[11px] font-medium whitespace-nowrap ring-1 ring-inset", e.cls, className)}
+      className={cx("inline-flex h-7 items-center gap-1.5 rounded-full px-2.5 text-xs font-semibold whitespace-nowrap ring-1 ring-inset", e.cls, className)}
     >
       <e.icon className="size-3" strokeWidth={1.5} />
       {e.label}
@@ -297,9 +297,9 @@ const NOTICE: Record<NoticeKind, { box: string; icon: LucideIcon; title: string 
 export function Notice({ kind, title, children, className, by }: { kind: NoticeKind; title: ReactNode; children?: ReactNode; className?: string; by?: EnforcerKind }) {
   const n = NOTICE[kind];
   return (
-    <div role={kind === "denied" ? "alert" : undefined} className={cx("flex gap-3 rounded-lg px-3.5 py-3 ring-1 ring-inset", n.box, className)}>
-      <n.icon className={cx("mt-0.5 size-4 shrink-0", n.title)} strokeWidth={1.5} />
-      <div className="min-w-0 flex-1 text-[13px]">
+    <div role={kind === "denied" ? "alert" : undefined} className={cx("flex gap-3.5 rounded-xl px-4 py-4 ring-1 ring-inset sm:px-5", n.box, className)}>
+      <n.icon className={cx("mt-0.5 size-[18px] shrink-0", n.title)} strokeWidth={1.5} />
+      <div className="min-w-0 flex-1 text-sm">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className={cx("font-semibold", n.title)}>{title}</p>
           {by && <Enforcer by={by} />}
@@ -314,8 +314,8 @@ export function Notice({ kind, title, children, className, by }: { kind: NoticeK
 export function RawDetail({ children, label = "Technical detail" }: { children: ReactNode; label?: string }) {
   return (
     <details className="mt-2 group">
-      <summary className="cursor-pointer text-xs font-medium text-ink-3 select-none hover:text-ink-2">{label}</summary>
-      <pre className="mt-1.5 max-h-44 overflow-auto rounded-md bg-surface/80 p-2.5 font-mono text-[11px] leading-relaxed whitespace-pre-wrap text-ink-2 ring-1 ring-line">{children}</pre>
+      <summary className="cursor-pointer text-sm font-medium text-ink-3 select-none hover:text-ink-2">{label}</summary>
+      <pre className="mt-2 max-h-48 overflow-auto rounded-lg bg-surface/80 p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap text-ink-2 ring-1 ring-line">{children}</pre>
     </details>
   );
 }
@@ -327,7 +327,7 @@ export function Progress({ value, max }: { value: number; max: number }) {
       <div className="h-1 w-full overflow-hidden rounded-full bg-line-2">
         <div className="h-full rounded-full bg-accent transition-[width] duration-500" style={{ width: `${pct}%` }} />
       </div>
-      <span className="tabular w-9 text-right text-xs text-ink-3">{pct}%</span>
+      <span className="tabular w-10 text-right text-sm text-ink-3">{pct}%</span>
     </div>
   );
 }
@@ -337,22 +337,22 @@ export function Progress({ value, max }: { value: number; max: number }) {
 export function Field({ label, hint, children }: { label: string; hint?: ReactNode; children: ReactNode }) {
   return (
     <label className="block">
-      <span className="text-[13px] font-medium text-ink">{label}</span>
-      {hint && <span className="mt-0.5 block text-xs text-ink-3">{hint}</span>}
+      <span className="text-sm font-medium text-ink">{label}</span>
+      {hint && <span className="mt-1 block text-[13px] text-ink-3">{hint}</span>}
       <div className="mt-1.5">{children}</div>
     </label>
   );
 }
 
 export const inputCls =
-  "w-full rounded-[7px] bg-surface px-3 py-2 text-sm text-ink ring-1 ring-line placeholder:text-ink-4 transition-[box-shadow,border-color] focus:ring-2 focus:ring-accent/60 focus:outline-none disabled:bg-sunken disabled:text-ink-3";
+  "w-full min-h-11 rounded-lg bg-surface px-3.5 py-2.5 text-sm text-ink ring-1 ring-line placeholder:text-ink-4 transition-[box-shadow,border-color] focus:ring-2 focus:ring-accent/60 focus:outline-none disabled:bg-sunken disabled:text-ink-3";
 
 export function CandidateId({ id, size = "md" }: { id: string; size?: "md" | "lg" }) {
   return (
     <span
       className={cx(
         "inline-flex items-center gap-1.5 rounded-[6px] bg-ink font-mono font-medium tracking-wide text-white shadow-[0_1px_2px_rgb(21_38_59/0.18)]",
-        size === "lg" ? "h-8 px-3 text-sm" : "h-6 px-2 text-xs",
+        size === "lg" ? "h-9 px-3.5 text-sm" : "h-7 px-2.5 text-xs",
       )}
     >
       <EyeOff className={size === "lg" ? "size-3.5" : "size-3"} strokeWidth={1.5} />
@@ -364,7 +364,7 @@ export function CandidateId({ id, size = "md" }: { id: string; size?: "md" | "lg
 export function ErrorText({ error }: { error: string | null }) {
   if (!error) return null;
   return (
-    <p className="mt-2 flex items-start gap-1.5 text-[13px] whitespace-pre-wrap text-deny">
+    <p className="mt-2 flex items-start gap-2 text-sm whitespace-pre-wrap text-deny">
       <CircleAlert className="mt-0.5 size-3.5 shrink-0" strokeWidth={1.5} />
       {error}
     </p>

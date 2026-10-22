@@ -50,13 +50,13 @@ export default function CampaignDetail({ params }: { params: Promise<{ id: strin
     }
   }
 
-  if (!d) return <p className="pt-6 text-[13px] text-ink-3">{error ?? "Loading…"}</p>;
+  if (!d) return <p className="pt-6 text-sm text-ink-3">{error ?? "Loading…"}</p>;
   const isOrgAdmin = has(ROLE.orgAdmin);
   const canAdvance = isOrgAdmin && d.nextStage && d.nextStage !== "DISCLOSURE";
 
   return (
     <div>
-      <Link href="/app/campaigns" className="inline-flex items-center gap-1.5 text-[13px] text-ink-3 hover:text-ink">
+      <Link href="/app/campaigns" className="inline-flex items-center gap-1.5 text-sm text-ink-3 hover:text-ink">
         <ArrowLeft className="size-3.5" strokeWidth={1.5} /> Campaigns
       </Link>
       <div className="mt-3">
@@ -68,7 +68,7 @@ export default function CampaignDetail({ params }: { params: Promise<{ id: strin
           <StageStepper stage={d.status} />
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line-2 bg-canvas px-4 py-3">
-          <div className="flex min-w-0 items-center gap-2 text-[13px]">
+          <div className="flex min-w-0 items-center gap-2 text-sm">
             <Enforcer by="veil" />
             {d.nextStage === "DISCLOSURE" ? (
               <span className="text-ink-3">Disclosure starts when a disclosure officer approves a request on the Disclosure page.</span>
@@ -108,7 +108,7 @@ export default function CampaignDetail({ params }: { params: Promise<{ id: strin
         <Card title="Rubric" flush>
           <ul>
             {d.criteria.map((c, i) => (
-              <li key={c.key} className={`flex items-center justify-between px-4 py-2.5 text-[13px] ${i ? "border-t border-line-2" : ""}`}>
+              <li key={c.key} className={`flex items-center justify-between px-4 py-2.5 text-sm ${i ? "border-t border-line-2" : ""}`}>
                 <span>{c.label}</span>
                 <span className="flex items-center gap-3">
                   <span className="h-1 w-24 overflow-hidden rounded-full bg-line-2">

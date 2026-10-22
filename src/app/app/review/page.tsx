@@ -52,11 +52,11 @@ export default function ReviewIndex() {
           <section key={c.id} className="mb-8 overflow-hidden rounded-lg ring-1 ring-line">
             <header className="flex flex-wrap items-center justify-between gap-4 border-b border-line-2 bg-canvas px-4 py-2.5">
               <div className="flex items-center gap-3">
-                <h2 className="text-[13px] font-semibold">{c.title}</h2>
+                <h2 className="text-sm font-semibold">{c.title}</h2>
                 <StageBadge stage={c.status} />
               </div>
               <div className="flex w-64 items-center gap-3">
-                <span className="tabular text-xs whitespace-nowrap text-ink-3">
+                <span className="tabular text-[13px] whitespace-nowrap text-ink-3">
                   {done}/{list.length} finalized
                 </span>
                 <Progress value={done} max={list.length} />
@@ -67,7 +67,7 @@ export default function ReviewIndex() {
                 <li key={r.id} className={i ? "border-t border-line-2" : ""}>
                   <Link href={`/app/review/${r.id}`} className="group grid items-center gap-x-4 gap-y-1.5 px-4 py-3 transition-colors hover:bg-canvas sm:grid-cols-[132px_1fr_auto_auto_16px]">
                     <CandidateId id={r.anonymous_candidate_id} />
-                    <span className="truncate text-[13px] font-medium text-ink">{r.title}</span>
+                    <span className="truncate text-sm font-medium text-ink">{r.title}</span>
                     <SecurityState kind="sealed" by="tide" compact />
                     {r.my_status === "FINALIZED" ? (
                       <Badge tone="final">

@@ -62,7 +62,7 @@ export default function ResultsPage() {
       {data && (
         <Card title={data.campaign.title} action={<StageBadge stage={data.campaign.status} />} flush>
           <div className="overflow-x-auto">
-            <table className="w-full text-[13px]">
+            <table className="w-full text-sm">
               <thead>
                 <tr>
                   <th className={`${th} w-14`}>Rank</th>

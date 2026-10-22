@@ -114,16 +114,16 @@ ${text}` }));
           Reviewers will only see your work and this candidate ID.
         </Notice>
         <div className="mt-6 rounded-lg p-5 ring-1 ring-line">
-          <p className="text-xs text-ink-3">Your anonymous candidate ID</p>
+          <p className="text-[13px] text-ink-3">Your anonymous candidate ID</p>
           <div className="mt-2">
             <CandidateId id={result.candidateId} size="lg" />
           </div>
-          <p className="mt-6 text-xs text-ink-3">What VEIL stored for your identity: Tide ciphertext (first 120 characters)</p>
-          <pre className="mt-2 overflow-x-auto rounded-md bg-canvas p-3 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap text-ink-2 ring-1 ring-line">{result.cipherPreview}…</pre>
-          <p className="mt-3 text-[13px] leading-relaxed text-ink-3">
+          <p className="mt-6 text-[13px] text-ink-3">What VEIL stored for your identity: Tide ciphertext (first 120 characters)</p>
+          <pre className="mt-2 overflow-x-auto rounded-md bg-canvas p-3 font-mono text-xs leading-relaxed break-all whitespace-pre-wrap text-ink-2 ring-1 ring-line">{result.cipherPreview}…</pre>
+          <p className="mt-3 text-sm leading-relaxed text-ink-3">
             It is encrypted under a write-only policy, so not even you can decrypt it with that policy. Only the quorum-appointed disclosure officer can open it, and only after reviews are final.
           </p>
-          <Link href="/app/apply" className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-accent hover:underline">
+          <Link href="/app/apply" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
             Back to my submissions
           </Link>
         </div>
@@ -135,7 +135,7 @@ ${text}` }));
 
   return (
     <div>
-      <Link href="/app/apply" className="inline-flex items-center gap-1.5 text-[13px] text-ink-3 hover:text-ink">
+      <Link href="/app/apply" className="inline-flex items-center gap-1.5 text-sm text-ink-3 hover:text-ink">
         <ArrowLeft className="size-3.5" strokeWidth={1.5} /> Opportunities
       </Link>
       <div className="mt-3 mb-6 flex flex-wrap items-end justify-between gap-4">
@@ -144,9 +144,9 @@ ${text}` }));
           <p className="mt-1.5 text-sm leading-relaxed text-ink-3">{campaign?.description}</p>
         </div>
         <div className="flex items-center gap-1 rounded-md bg-canvas p-1 ring-1 ring-line">
-          <span className="px-2 text-xs text-ink-3">Synthetic candidate</span>
+          <span className="px-2 text-[13px] text-ink-3">Synthetic candidate</span>
           {DEMO_CANDIDATES.map((d, i) => (
-            <button key={i} onClick={() => fill(i)} title={d.label} className="h-6 rounded px-2 text-xs font-medium text-ink-2 hover:bg-surface hover:text-ink hover:shadow-[0_1px_2px_rgb(12_26_46/0.08)]">
+            <button key={i} onClick={() => fill(i)} title={d.label} className="h-6 rounded px-2 text-[13px] font-medium text-ink-2 hover:bg-surface hover:text-ink hover:shadow-[0_1px_2px_rgb(12_26_46/0.08)]">
               {i + 1}
             </button>
           ))}
@@ -179,12 +179,12 @@ ${text}` }));
         {/* identity */}
         <section className="border-line bg-seal-soft/40 p-5 lg:border-r">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="flex items-center gap-2 text-[13px] font-semibold text-seal">
+            <h2 className="flex items-center gap-2 text-sm font-semibold text-seal">
               <Lock className="size-4" strokeWidth={1.5} /> Your identity · Protected
             </h2>
             <Enforcer by="tide" />
           </div>
-          <p className="mt-1 text-[13px] text-ink-3">Encrypted in this browser before it leaves your device.</p>
+          <p className="mt-1 text-sm text-ink-3">Encrypted in this browser before it leaves your device.</p>
           <div className="mt-5 space-y-4">
             <Field label="Full name">
               <input className={inputCls} autoComplete="name" value={identity.fullName} onChange={(e) => setIdentity({ ...identity, fullName: e.target.value })} />
@@ -200,8 +200,8 @@ ${text}` }));
             </Field>
           </div>
           <div className="mt-6 border-t border-seal/15 pt-4">
-            <p className="text-xs font-medium text-ink-2">Who can see this</p>
-            <ul className="mt-2 space-y-1.5 text-[13px] text-ink-2">
+            <p className="text-[13px] font-medium text-ink-2">Who can see this</p>
+            <ul className="mt-2 space-y-1.5 text-sm text-ink-2">
               <li className="flex gap-2">
                 <EyeOff className="mt-0.5 size-3.5 shrink-0 text-ink-4" strokeWidth={1.5} /> Reviewers: never.
               </li>
@@ -218,11 +218,11 @@ ${text}` }));
         {/* work */}
         <section className="bg-surface p-5">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="flex items-center gap-2 text-[13px] font-semibold">
+            <h2 className="flex items-center gap-2 text-sm font-semibold">
               <Users className="size-4 text-accent" strokeWidth={1.5} /> Your submission · Shared with evaluators
             </h2>
           </div>
-          <p className="mt-1 text-[13px] text-ink-3">Keep this section free of anything that identifies you.</p>
+          <p className="mt-1 text-sm text-ink-3">Keep this section free of anything that identifies you.</p>
           <div className="mt-5 space-y-4">
             <Field label="Case study title">
               <input className={inputCls} value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -245,8 +245,8 @@ ${text}` }));
                   </li>
                 ))}
               </ul>
-              <p className="mt-2 text-xs text-ink-3">These are simple pattern checks and cannot catch everything.</p>
-              <label className="mt-2 flex items-center gap-2 text-xs font-medium text-ink">
+              <p className="mt-2 text-[13px] text-ink-3">These are simple pattern checks and cannot catch everything.</p>
+              <label className="mt-2 flex items-center gap-2 text-[13px] font-medium text-ink">
                 <input type="checkbox" className="accent-[var(--color-accent)]" checked={ack} onChange={(e) => setAck(e.target.checked)} /> I understand, submit anyway
               </label>
             </Notice>
@@ -267,7 +267,7 @@ ${text}` }));
           {encrypting && (
             <ol className="mt-4 space-y-1.5">
               {STEPS.map((s, i) => (
-                <li key={s} className={cx("flex items-center gap-2 text-[13px]", i < step ? "text-ink-2" : i === step ? "font-medium text-ink" : "text-ink-4")}>
+                <li key={s} className={cx("flex items-center gap-2 text-sm", i < step ? "text-ink-2" : i === step ? "font-medium text-ink" : "text-ink-4")}>
                   {i < step ? (
                     <Check className="size-3.5 text-grant" strokeWidth={1.5} />
                   ) : (

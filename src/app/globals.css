@@ -4,6 +4,10 @@
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-display: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.4;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.5;
 
   /* VEIL's palette is taken from the work itself: paper, ink, and a sealed record. */
   --color-ink: #15263b;
@@ -48,8 +52,8 @@ html {
 
 body {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-feature-settings: "ss01", "cv11";
@@ -68,6 +72,18 @@ body {
 
 a {
   text-underline-offset: 3px;
+}
+
+.seal-spine-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 639px) {
+  .seal-spine-label {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
 }
 
 input,
